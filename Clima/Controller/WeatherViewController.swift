@@ -10,10 +10,14 @@ import UIKit
 
 class WeatherViewController: UIViewController, UITextFieldDelegate {
 
+    
+    
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
+    
+    var weatherManager = WeatherManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +39,15 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
         if textField.text != "" {
             return true
         } else {
-            searchTextField.placeholder = "Type Something False"
+            searchTextField.placeholder = "Type Something"
             return false
         } //textField is referring to the TextField class - Any TextField
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
+        if let city = searchTextField.text {
+            weatherManager.fetchWeather(cityName: city)
+        }
         searchTextField.text = ""
     } //Clearing the text field
     
